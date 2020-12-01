@@ -17,7 +17,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 1;
+const unsigned int N = 26;
 
 // Hash table
 node *table[N];
@@ -28,8 +28,11 @@ unsigned long dict_size = 0;
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    // TODO
-    return 0;
+    if (word[0] >= 97) {
+        return (word[0] - 97);
+    } else {
+        return (word[0] - 65);
+    }
 }
 
 // Returns true if word is in dictionary else false
@@ -37,6 +40,9 @@ bool check(const char *word)
 {
     unsigned int hash_of_the_word = hash(word);
     node *cursor = table[hash_of_the_word];
+    // No entries in this bucket, so the word is not in the dictionary
+    if (cursor == NULL) return false;
+
     while(cursor->next != NULL) {
         if (strcasecmp((cursor->word), word) == 0) {
             return true;            
