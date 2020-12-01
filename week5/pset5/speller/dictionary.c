@@ -129,16 +129,14 @@ unsigned int size(void)
 
 void free_row(node* rowofTable)
 {
-    node* row = rowofTable;
-    if (row->next == NULL) {
-        free(row);
-        return;
+    node *cursor = rowofTable, *tmp = rowofTable;
+    while (cursor->next != NULL) {
+        cursor = cursor->next;
+        free(tmp);
+        tmp = cursor;
     }
-    else {
-        free_row(row->next);
-        free(row);
-        return;
-    }
+    free(cursor);
+    return;    
 }
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
@@ -147,9 +145,7 @@ bool unload(void)
         // We might have fucked up our hash function and
         // some baskets are left empty
         if (table[i] == NULL) continue;
-        
-        node* cursor = table[i];
-            free_row(table[i]);
+        free_row(table[i]);
         }
     return true;
 }
