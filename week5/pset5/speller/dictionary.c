@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <strings.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "dictionary.h"
 
@@ -17,7 +18,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 26;
+const unsigned int N = 676;
 
 // Hash table
 node *table[N];
@@ -28,15 +29,18 @@ unsigned long dict_size = 0;
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    // Takes care of upper/lower case also
-    if (word[0] >= 97)
+    unsigned int hash = 0;
+    int length = strlen(word);
+    if (length == 1)
     {
-        return (word[0] - 97);
+        hash = 2 * tolower(word[0]);
     }
     else
     {
-        return (word[0] - 65);
+        // Does not work is ' is in the first two, should be taken care of
+        hash = tolower(word[0]) * tolower(word[1]);
     }
+    return hash;
 }
 
 // Returns true if word is in dictionary else false
