@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
             // Print word if misspelled
             if (misspelled)
             {
-                printf("this is misspelled  %s\n", word);
+                printf("%s\n", word);
                 misspellings++;
             }
 
