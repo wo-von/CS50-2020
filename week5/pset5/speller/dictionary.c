@@ -28,6 +28,7 @@ unsigned long dict_size = 0;
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
+    // Takes care of upper/lower case also
     if (word[0] >= 97) {
         return (word[0] - 97);
     } else {
@@ -58,7 +59,6 @@ bool check(const char *word)
     }
 
 }
-
 
 // Added by SSH to insert a node into the given global table of length N
 bool insert_into_table(node* to_insert_node, unsigned int hash_code)
