@@ -1,0 +1,14 @@
+## Pointers
+* pointers are good way for passing values to functions, so we need good pointer discipline
+* data is passed by value in c, which means a copy is sent and the function does stuff and returns and we might use the return value
+  * there is one exception
+* we cannot manipulate data in HDD or ssd, ony in ram and in CS when we say memory, we mean ram
+* pointers are just addresses.
+* so pointers point us to where we want to look at in memory
+* so if we know the address of some data, we can work with it directly
+* NULL pointer point to nothing, and is very useful and if we create a pointer and do not assign a valluable adress to it right away, we should set it to NULL and not leave it hanging
+* the name of an array is a pointer to the first element of that array
+* main point of pointer: go to the address it points to and modufy: called dereferencing
+* dereferencing a null pointer will lead to segmentation fault which is good, because otherwise we might mess with something and break other programs
+* so pointer is an adress and it is 4 or 8 bytes (32 or 64 bit machine).
+* if a pointer poits to somewhere and then we change the address it is pointing to, the pointer it self(its address and location) does not change,, just its content (tthe address it is pointing to)
