@@ -29,9 +29,12 @@ unsigned long dict_size = 0;
 unsigned int hash(const char *word)
 {
     // Takes care of upper/lower case also
-    if (word[0] >= 97) {
+    if (word[0] >= 97)
+    {
         return (word[0] - 97);
-    } else {
+    }
+    else
+    {
         return (word[0] - 65);
     }
 }
@@ -42,33 +45,44 @@ bool check(const char *word)
     unsigned int hash_of_the_word = hash(word);
     node *cursor = table[hash_of_the_word];
     // No entries in this bucket, so the word is not in the dictionary
-    if (cursor == NULL) return false;
-
-    while(cursor->next != NULL) {
-        if (strcasecmp((cursor->word), word) == 0) {
+    if (cursor == NULL)
+    {
+        return false;
+    }
+    while (cursor->next != NULL)
+    {
+        if (strcasecmp((cursor->word), word) == 0)
+        {
             return true;            
         } 
-        else {
+        else
+        {
             cursor = cursor->next;
         }
     }
-    if (strcasecmp((cursor->word), word) == 0) {
+    if (strcasecmp((cursor->word), word) == 0)
+    {
         return true;
-    } else {
+    } 
+    else
+    {
         return false;
     }
 
 }
 
 // Added by SSH to insert a node into the given global table of length N
-bool insert_into_table(node* to_insert_node, unsigned int hash_code)
+bool insert_into_table(node *to_insert_node, unsigned int hash_code)
 {
-    if (table[hash_code] == NULL) {
+    if (table[hash_code] == NULL)
+    {
         // First item to be added at this index, all other will be addded before it, this will always be the last one
         to_insert_node->next = NULL;
         table[hash_code] = to_insert_node;
         return true;
-    } else {
+    }
+    else
+    {
         to_insert_node->next = table[hash_code];
         table[hash_code] = to_insert_node;
         return true;
@@ -77,7 +91,8 @@ bool insert_into_table(node* to_insert_node, unsigned int hash_code)
 }
 void initialize_table(void)
 {
-    for (int i = 0; i < N; i++){
+    for (int i = 0; i < N; i++)
+    {
         table[i] = NULL;
     }
 }
@@ -85,9 +100,10 @@ void initialize_table(void)
 // Loads dictionary into memory, returning true if successful else false
 bool load(const char *dictionary)
 {
-    FILE* fp = fopen(dictionary, "r");
+    FILE *fp = fopen(dictionary, "r");
 
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         printf("No enough memmory to open the dictonary file\n");   
         return false;
     }
@@ -96,14 +112,15 @@ bool load(const char *dictionary)
     /* 
     You may assume that any dictionary passed to your program will be structured exactly like ours, alphabetically sorted from top to bottom with one word per line, each of which ends with \n.You may also assume that dictionary will contain at least one word, that no word will be longer than LENGTH(a constant defined in dictionary.h) characters, that no word will appear more than once, that each word will contain only lowercase alphabetical characters and possibly apostrophes, and that no word will start with an apostrophe.
     */
-    char* word = malloc(LENGTH * sizeof(char));
+    char *word = malloc(LENGTH * sizeof(char));
     initialize_table();
     // To keep count of the dictionary size
     int j = 0;
     for (int i = fscanf(fp, "%s", word); i != EOF; i = fscanf(fp, "%s", word), j++)
     {
-        node* new_node = malloc(sizeof(node));
-        if (new_node == NULL){
+        node *new_node = malloc(sizeof(node));
+        if (new_node == NULL)
+        {
             printf("Not enough memory for opening a new node for the hash table\n");
             return false;
         }
@@ -112,7 +129,8 @@ bool load(const char *dictionary)
         unsigned int table_index = hash(new_node->word);
         // Try to insert the node into the hash table
         // If failed, terminate
-        if (!insert_into_table(new_node, table_index)){
+        if (!insert_into_table(new_node, table_index))
+        {
             printf("Could not insert %s into table, terminate\n", word);
             return false;
         }
@@ -129,14 +147,18 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    if (dict_size < 0) return 0;
+    if (dict_size < 0)
+    {
+        return 0;
+    }
     return dict_size;
 }
 
-void free_row(node* rowofTable)
+void free_row(node *rowofTable)
 {
     node *cursor = rowofTable, *tmp = rowofTable;
-    while (cursor->next != NULL) {
+    while (cursor->next != NULL)
+    {
         cursor = cursor->next;
         free(tmp);
         tmp = cursor;
@@ -147,11 +169,15 @@ void free_row(node* rowofTable)
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < N; i++)
+    {
         // We might have fucked up our hash function and
         // some baskets are left empty
-        if (table[i] == NULL) continue;
-        free_row(table[i]);
+        if (table[i] == NULL)
+        {
+            continue;
         }
+        free_row(table[i]);
+    }
     return true;
 }
