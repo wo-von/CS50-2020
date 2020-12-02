@@ -119,7 +119,7 @@ bool load(const char *dictionary)
     /* 
     You may assume that any dictionary passed to your program will be structured exactly like ours, alphabetically sorted from top to bottom with one word per line, each of which ends with \n.You may also assume that dictionary will contain at least one word, that no word will be longer than LENGTH(a constant defined in dictionary.h) characters, that no word will appear more than once, that each word will contain only lowercase alphabetical characters and possibly apostrophes, and that no word will start with an apostrophe.
     */
-    char *word = malloc(LENGTH * sizeof(char));
+    char *word = malloc((LENGTH + 1) * sizeof(char));
     initialize_table();
     // To keep count of the dictionary size
     int j = 0;
