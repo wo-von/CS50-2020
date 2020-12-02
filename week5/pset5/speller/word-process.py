@@ -10,6 +10,7 @@ import string
 
 dict_large = 'dictionaries/large'
 dict_small = 'dictionaries/small'
+BUCKETMAGIC=10000000
 # A dictionary with ascii alphas and codes starting from 0
 letter_codes = dict([pair for pair in zip(string.ascii_lowercase + "'", range(27))])
 
@@ -53,11 +54,9 @@ def hash_function_djb2(word: str) -> int:
     djb2 hash by dan bernstein
     '''
     hash_salt = 5381
-    print(word, end=" hash")
     for letter in word:
         hash_salt = hash_salt * 33 + letter_codes[letter]
-    print(hash_salt)
-    return hash_salt
+    return hash_salt % BUCKETMAGIC
 
 def generate_hash_table(initialwordlist : list, func) -> dict:
     '''
@@ -74,13 +73,12 @@ def plt_hash(hash_table : dict):
     '''
     Gets the hash table (dictionary) and plots it
     '''
-    testList = [str(x) for x in hash_table.keys()]
-    print(testList)
-    print(hash_table)
+    testList = [x for x in sorted(list(hash_table.keys()))]
+    result = {k: hash_table[k] for k in testList}
     plt.figure('Sum')
     plt.clf()
-    plt.plot([str(x) for x in hash_table.keys()], list(hash_table.values()))
-    plt.title("use of sum of letter codes")
+    plt.plot(testList, [result[k] for k in testList])
+    plt.title("dan berstein hash function results")
     plt.show(block = False)
 
 if __name__ == '__main__':
@@ -93,4 +91,6 @@ if __name__ == '__main__':
         raise SystemExit(f"Usage: {sys.argv[0]} dictionary-file")
 
     hash_table = generate_hash_table(readDictintolist(word_dictinary), hash_function_djb2)
-    # plt_hash(hash_table)
+    # num_of_dict_words = sum([x for x in result.values()])
+    plt_hash(hash_table)
+    
