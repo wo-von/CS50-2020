@@ -11,9 +11,9 @@ import string
 dict_large = 'dictionaries/large'
 dict_small = 'dictionaries/small'
 # A dictionary with ascii alphas and codes starting from 0
-letter_codes = dict([pair for pair in zip(string.ascii_lowercase, range(26))])
+letter_codes = dict([pair for pair in zip(string.ascii_lowercase + "'", range(27))])
 
-def readDictintolist(dictFile = dict_large) -> list :
+def readDictintolist(dictFile) -> list :
     '''
     opens the dictionar file and reads it into a list
     '''
@@ -47,6 +47,17 @@ def hash_function_sum(word: str) -> int:
     hash_code = ''.join([e for e in word if e is not "'"])
     hash_code = sum([letter_codes[e] for e in hash_code])
     return hash_code
+
+def hash_function_djb2(word: str) -> int:
+    '''
+    djb2 hash by dan bernstein
+    '''
+    hash_salt = 5381
+    print(word, end=" hash")
+    for letter in word:
+        hash_salt = hash_salt * 33 + letter_codes[letter]
+    print(hash_salt)
+    return hash_salt
 
 def generate_hash_table(initialwordlist : list, func) -> dict:
     '''
