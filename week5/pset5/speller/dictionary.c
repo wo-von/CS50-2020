@@ -18,7 +18,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 1;
+const unsigned int N = 1000000000;
 
 // Hash table
 node *table[N];
@@ -31,18 +31,18 @@ unsigned long dict_size = 0;
 // http://www.cse.yorku.ca/~oz/hash.html
 unsigned long hash(const char *word)
 {
-    // unsigned long hash = 5381;
-    // int c;
+    unsigned long hash = 5381;
+    int c;
 
-    // while ((c = *word++))
-    //     if (c != '\'' && c >= 'A' && c <= 'Z')
-    //     {
-    //         c = tolower(c);
-    //     }
-    //     hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    while ((c = *word++))
+        if (c != '\'' && c >= 'A' && c <= 'Z')
+        {
+            c = tolower(c);
+        }
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
     
-    // hash %= N;
-    return 0;
+    hash %= N;
+    return hash;
 }
 
 // Returns true if word is in dictionary else false
