@@ -10,11 +10,11 @@ import string
 
 dict_large = 'dictionaries/large'
 dict_small = 'dictionaries/small'
-BUCKETMAGIC=10000000
+BUCKETMAGIC=100
 # A dictionary with ascii alphas and codes starting from 0
 letter_codes = dict([pair for pair in zip(string.ascii_lowercase + "'", range(27))])
 
-def readDictintolist(dictFile) -> list :
+def readDictintolist(dictFile) -> list:
     '''
     opens the dictionar file and reads it into a list
     '''
