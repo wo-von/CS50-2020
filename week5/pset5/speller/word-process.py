@@ -92,5 +92,5 @@ if __name__ == '__main__':
     else:
         raise SystemExit(f"Usage: {sys.argv[0]} dictionary-file")
 
-    hash_table = generate_hash_table(readDictintolist(), hash_function_sum)
+    hash_table = generate_hash_table(readDictintolist(word_dictinary), hash_function_djb2)
     # plt_hash(hash_table)
