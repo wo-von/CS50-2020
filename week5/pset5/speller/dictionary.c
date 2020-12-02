@@ -18,7 +18,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 676;
+const unsigned int N = 1;
 
 // Hash table
 node *table[N];
@@ -27,20 +27,22 @@ node *table[N];
 unsigned long dict_size = 0;
 
 // Hashes word to a number
-unsigned int hash(const char *word)
+// dan bernstein's djb2 hash algorithm
+// http://www.cse.yorku.ca/~oz/hash.html
+unsigned long hash(const char *word)
 {
-    unsigned int hash = 0;
-    int length = strlen(word);
-    if (length == 1)
-    {
-        hash = 2 * tolower(word[0]);
-    }
-    else
-    {
-        // Does not work is ' is in the first two, should be taken care of
-        hash = tolower(word[0]) * tolower(word[1]);
-    }
-    return hash;
+    // unsigned long hash = 5381;
+    // int c;
+
+    // while ((c = *word++))
+    //     if (c != '\'' && c >= 'A' && c <= 'Z')
+    //     {
+    //         c = tolower(c);
+    //     }
+    //     hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    
+    // hash %= N;
+    return 0;
 }
 
 // Returns true if word is in dictionary else false
