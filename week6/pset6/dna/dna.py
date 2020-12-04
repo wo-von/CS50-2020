@@ -23,19 +23,19 @@ def sequence_profiler(sequenceFile, srts):
         
     
     # profile = dict()
-    # for srt in srts:
+    # for str in strs:
     #     max = count = flag = 0
     #     while flag < len(seq):
-    #         if seq[flag:flag+len(srt)] == srt:
+    #         if seq[flag:flag+len(str)] == str:
     #             count += 1
-    #             flag += len(srt)
+    #             flag += len(str)
     #         else:
     #             flag += 1
     #             if count > max:
     #                 max = count
     #             else:
     #                 count = 0
-    #     profile[srt] = max
+    #     profile[str] = max
     # return profile    
 
 
@@ -45,15 +45,15 @@ def databasereader(csvfile, seqfile):
     '''
     with open(csvfile) as f:
         rows = csv.DictReader(f)
-        # What SRTs are of interest
-        SRTList = rows.fieldnames[1:]
-        # Calculate the longest consequetive SRTs for the sequence
-        profiledict = sequence_profiler(seqfile, SRTList)
+        # What STRs are of interest
+        STRList = rows.fieldnames[1:]
+        # Calculate the longest consequetive STRs for the sequence
+        profiledict = sequence_profiler(seqfile, STrList)
         found = False
         for suspect in rows:
             suspect = dict(suspect)
-            for srt in SRTList:
-                if profiledict[srt] == int(suspect[srt]):
+            for str in STRList:
+                if profiledict[str] == int(suspect[str]):
                     found = True
                     continue
                 else:
