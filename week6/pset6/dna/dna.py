@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 
-###===
+# ===
 # Standard library imports
 
 import sys
 import csv
-###===
+# ===
+
 
 def updateProfileDict(Prof, count, flag, STR):
     seq, max = Prof[STR]
@@ -14,12 +15,13 @@ def updateProfileDict(Prof, count, flag, STR):
     for _ in range(count):
         seq[flag] = count
         flag += len(STR)
+        count -= 1
     Prof[STR] = seq, max
 
 
 def STR_hunter(seq, flag, STR):
     '''
-    Once a `specific` STR is found, the sequence is passed to this function and it 
+    Once a `specific` STR is found, the sequence is passed to this function and it
     tries to find out how far it goes
     '''
     count = 0
@@ -42,27 +44,27 @@ def sequence_profiler(sequenceFile, strs):
     f = open(sequenceFile)
     seq = f.read()
     f.close()
-    
+
     # Sequence is profiled in a dictionary with strs as keys and a tuple of (string, max)
     # as value, string shows where each sequence of str starts and for how long
-    # if str = "AGATC", then 
+    # if str = "AGATC", then
     # GGAGATCAGATCAGATCAGATCTAT
     # 0040000300002000010000
     profileDict = {}
     for str in strs:
         profileDict[str] = ([0] * len(seq), 0)
 
-    flag = 0 # where we are in the sequence
-    count  = 0 # For each STR, after one is found
-    while flag < len(seq):
-        for str in strs:
+    count = 0  # For each STR, after one is found
+    for str in strs:
+        flag = 0  # where we are in the sequence
+        while flag < len(seq):
             if seq[flag:flag+len(str)] == str:
                 count = STR_hunter(seq, flag, str)
                 updateProfileDict(profileDict, count, flag, str)
-                flag += count * len(str) - 1 # -1 since it gets added a 1 anyway
+                flag += count * len(str)
                 count = 0
-                break
-        flag += 1
+            else:
+                flag += 1
     return profileDict
 
     # profile = dict()
@@ -79,7 +81,7 @@ def sequence_profiler(sequenceFile, strs):
     #             else:
     #                 count = 0
     #     profile[str] = max
-    # return profile    
+    # return profile
 
 
 def databasereader(csvfile, seqfile):
@@ -118,4 +120,3 @@ if __name__ == "__main__":
         databasefile = sys.argv[1]
         sequencefile = sys.argv[2]
     databasereader(databasefile, sequencefile)
-    
