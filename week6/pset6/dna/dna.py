@@ -67,22 +67,6 @@ def sequence_profiler(sequenceFile, strs):
                 flag += 1
     return profileDict
 
-    # profile = dict()
-    # for str in strs:
-    #     max = count = flag = 0
-    #     while flag < len(seq):
-    #         if seq[flag:flag+len(str)] == str:
-    #             count += 1
-    #             flag += len(str)
-    #         else:
-    #             flag += 1
-    #             if count > max:
-    #                 max = count
-    #             else:
-    #                 count = 0
-    #     profile[str] = max
-    # return profile
-
 
 def databasereader(csvfile, seqfile):
     '''
